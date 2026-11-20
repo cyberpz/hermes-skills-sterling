@@ -10,7 +10,7 @@ credenziale, host o percorso interno.
 
 | Skill | Copertura |
 |---|---|
-| `sterling-edi-ops` | Ombrello operativo: triage log-archive, tuning code BusinessProcess, mappe MXL, estensioni web WAR su Sterling, integrazione Amazon SP-API senza SDK, feed catalogo/PRICAT per partner |
+| `sterling-edi-ops` | Ombrello operativo: triage log-archive, tuning code BusinessProcess, mappe MXL, estensioni web WAR su Sterling |
 | `sterling-map-compile` | Compilazione headless di mappe Sterling (`.mxl`/`.map` → `.txo`) con `mapper.exe -c` sotto Wine, senza GUI |
 
 ## Installazione (Hermes Agent)
@@ -25,7 +25,6 @@ cp -r sterling-edi-ops sterling-map-compile ~/.hermes/skills/
 
 - IBM Sterling Map Editor Guide — "Compiling Maps Using the Command Line"
 - IBM Sterling extended rule language reference (funzioni stringa disponibili)
-- Amazon SP-API developer docs (`llms.txt` index) + OpenAPI models su GitHub
 
 ## Licenza
 

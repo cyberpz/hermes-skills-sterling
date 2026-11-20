@@ -1,18 +1,18 @@
 ---
 name: sterling-edi-ops
-description: Use for Sterling B2B Integrator EDI operations: log triage, BP queue tuning, MXL maps, WAR extensions, SP-API feeds.
+description: Use for Sterling B2B Integrator EDI operations: log triage, BP queue tuning, MXL maps, WAR extensions.
 version: 1.0.0
 author: Giuseppe Vitale
 license: MIT
 metadata:
   hermes:
-    tags: [sterling-b2b, edi, oracle, sp-api, logs]
+    tags: [sterling-b2b, edi, oracle, logs]
     related_skills: [sterling-map-compile]
 ---
 
 # Sterling B2B Integrator — operations (general)
 
-Umbrella for day-to-day Sterling EDI work: log-archive triage, BP queue tuning, MXL maps, web WAR extensions on Sterling, Amazon SP-API listing integration, catalog/PRICAT feeds for partners.
+Umbrella for day-to-day Sterling EDI work: log-archive triage, BP queue tuning, MXL maps, web WAR extensions on Sterling.
 
 ## Always-on constraints
 
@@ -39,13 +39,6 @@ Umbrella for day-to-day Sterling EDI work: log-archive triage, BP queue tuning, 
 - Chronic-vs-sudden test is MANDATORY before any verdict: aggregate errors per hour over the whole file (`grep <pat> | sed -E 's/^\[([0-9-]+ [0-9]{2}):.*/\1/' | uniq -c`). Known chronic baselines: `references/log-triage.md`.
 - Correlate a document's flow by grepping its `WFID:NNNN` across the channel logs (sap/ftpclient/cla2server/tracking). BP backlog: check flood vs stuck-consumer FIRST; `Interrupted_Man` leaves no log trace (DB `WORKFLOW_CONTEXT.BASIC_STATUS=450`). Status codes and root causes: `references/log-triage.md`.
 
-## Amazon SP-API (file pipeline, no SDK)
-
-- SP-API is plain REST+JSON; SDKs are replicable wrappers — never use one. Sterling never calls REST: Sterling map/SELECT → canonical CSV → converter → one JSON per SKU → separate delivery step.
-- Docs: request the `.md` version of developer-docs URLs + the `llms.txt` index; real schemas live in the OpenAPI models on GitHub (Listings models are Swagger 2.0 → `definitions` key, not `components.schemas`). Per-productType attribute schemas come from the Product Type Definitions API.
-- LWA refresh-token flow; cache the bearer ~50 min. Listings Items is NOT restricted data: no SigV4, no RDT. EU host `sellingpartnerapi-eu.amazon.com`, IT marketplace `APJ6JRA9NG5V4`; LWA host `api.amazon.com` — both need firewall allow-list.
-- Attribute values are ALWAYS arrays; PUT = full replacement, PATCH = JSON Patch RFC 6902; test with `mode=VALIDATION_PREVIEW`; always log `issues[]` from the submission response. Canonical CSV spec + converter pattern: `references/spapi-listings.md`.
-
 ## BP queues / priority tuning
 
 - BP priority 1–10 → internal queue code Q1–Q9/Q10 (default 7); threads are per-queue, NOT per-priority; bulk priority changes ONLY via API `BusinessProcessService`. Tuning properties, FairShare scheduling policy, example queue schema, analysis-script approach: `references/queue-tuning.md`.
@@ -55,8 +48,3 @@ Umbrella for day-to-day Sterling EDI work: log-archive triage, BP queue tuning, 
 - Exported xlate maps are XML (namespace `stercomm.com/SI/Map`): analyze and modify them as text (raw surgery, NEVER re-serialize with ElementTree), then re-import into the Map Editor to validate. Mapping links = `<Link>` elements (source ID inside the output node); there are NO MapRef/Translation elements. Structure, dump via `scripts/dump_map.py`, edit recipe and pitfalls: `references/sterling-mxl-maps.md`.
 - Binary `.map` export (GENTRAN template source, `file` says "data"): embedded scripts stay readable in cp1252 — locate hardcoded literals with `grep -a -b <pattern>` (gives the byte offset) and dump context with python. Every script statement is preceded by a length byte: patch with an in-place SAME-LENGTH substitution (pad with spaces around `=`) so the prefix and offsets stay valid; verify identical file size, confined diff range, target-string count 0→1. After the patch: import + compile in the Map Editor in a test environment. Hardcoded literals (VAT, entity addresses) are often copied from the twin country's map: grep the literal before hunting the logical mapping.
 - In the Sterling DB maps live as zipped BLOBs in `DATA_TABLE` (metadata in `MAP`/`MAP_VERSIONS`/`DATA_HEADERS`); headless compilation `mapper.exe -c` (also under Wine): see skill `sterling-map-compile` + `references/sterling-mxl-maps.md`.
-
-## Pricat / catalog feed per partner marketplace
-
-- Partner xlsx template with only the SKU+size column populated → fill the remaining columns with an ad-hoc query on the product master. Fixed-position SKU pitfalls, verification-first procedure: `references/pricat-catalog-feeds.md`. Dependency-free template reading: `scripts/xlsx_dump_stdlib.py`.
-- EDIFACT PRICAT (e.g. 96A) is a different deliverable from the xlsx template: always confirm the partner spec (xlsx vs EDIFACT) before starting.

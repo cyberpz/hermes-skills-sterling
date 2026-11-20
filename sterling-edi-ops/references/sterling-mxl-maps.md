@@ -80,5 +80,5 @@ for side in ('INPUT','OUTPUT'):
 
 - Before editing, keep the untouched original for the diff; text edits via targeted patch on unique XML fragments (nodes repeat numeric IDs: anchor Name+ID together).
 - Well-formed XML ≠ valid map: real validation is re-import into Map Editor + test run — never declare the change working before that.
-- **Audit inherited fixed-position `mid()`/`left()`/`right()` SKU slices in cloned rules**: if the brand's style prefix has variable length (e.g. 19 OR 20 chars), a cloned map slicing at fixed positions extracts wrong color/article on a double-digit % of styles (same pitfall as `pricat-catalog-feeds.md`).
+- **Audit inherited fixed-position `mid()`/`left()`/`right()` SKU slices in cloned rules**: if the brand's style prefix has variable length (e.g. 19 OR 20 chars), a cloned map slicing at fixed positions extracts wrong color/article on a double-digit % of styles.
 - Rules contain product-specific fixes of the source partner (matches on specific article codes): flag them as removal candidates when the map serves a different partner.
