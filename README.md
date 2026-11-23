@@ -15,12 +15,31 @@ credenziale, host o percorso interno.
 | `sterling-edi-ops` | Ombrello operativo: triage log-archive, tuning code BusinessProcess, mappe MXL, estensioni web WAR su Sterling |
 | `sterling-map-compile` | Compilazione headless di mappe (`.mxl`/`.map` → `.txo`) con `mapper.exe -c` sotto **Wine/Linux**, senza GUI — gemello via-Wine di `sterling-mappe` |
 
-## Installazione (Hermes Agent)
+## Installazione
 
-Copiare le cartelle delle skill nella directory skills dell'agente, ad es.:
+Le skill sono markdown con frontmatter YAML (formato Agent Skills): lo stesso identico file
+funziona su Hermes Agent e su Claude / Claude Code.
+
+**Claude Code** — personali (tutti i progetti):
 
 ```bash
-cp -r sterling-edi-ops sterling-map-compile ~/.hermes/skills/
+cp -r sterling-bp sterling-mappe sterling-edi-ops sterling-map-compile ~/.claude/skills/
+```
+
+**Claude Code** — solo questo progetto (versionate nel repo del progetto):
+
+```bash
+mkdir -p .claude/skills
+cp -r sterling-bp sterling-mappe sterling-edi-ops sterling-map-compile .claude/skills/
+```
+
+**Claude (app claude.ai)** — Settings → Capabilities → Skills: zippare ogni cartella
+(`zip -r sterling-bp.zip sterling-bp/`) e caricarla.
+
+**Hermes Agent**:
+
+```bash
+cp -r sterling-bp sterling-mappe sterling-edi-ops sterling-map-compile ~/.hermes/skills/
 ```
 
 ## Riferimenti esterni usati
