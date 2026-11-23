@@ -7,7 +7,7 @@ license: MIT
 metadata:
   hermes:
     tags: [sterling-b2b, edi, wine, map-editor]
-    related_skills: [sterling-edi-ops]
+    related_skills: [sterling-mappe, sterling-bp]
 ---
 
 # Sterling Map compile headless (Mapper.exe sotto Wine) — VERIFICATO

@@ -10,8 +10,10 @@ credenziale, host o percorso interno.
 
 | Skill | Copertura |
 |---|---|
+| `sterling-bp` | Scrivere/correggere Business Process (BPML, `.bp`/`.gpl`, GPM): regole strutturali, onFault, transazioni, retry FTP/SFTP, export dal DB, workflow TEST→PROD |
+| `sterling-mappe` | Scrivere/correggere mappe Sterling (`.mxl`/`.map`/`.txo`) su Windows con Map Editor locale: conversione, controlli (`controlla_mxl.py`), compilazione, regole estese |
 | `sterling-edi-ops` | Ombrello operativo: triage log-archive, tuning code BusinessProcess, mappe MXL, estensioni web WAR su Sterling |
-| `sterling-map-compile` | Compilazione headless di mappe Sterling (`.mxl`/`.map` → `.txo`) con `mapper.exe -c` sotto Wine, senza GUI |
+| `sterling-map-compile` | Compilazione headless di mappe (`.mxl`/`.map` → `.txo`) con `mapper.exe -c` sotto **Wine/Linux**, senza GUI — gemello via-Wine di `sterling-mappe` |
 
 ## Installazione (Hermes Agent)
 
