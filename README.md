@@ -1,4 +1,4 @@
-# hermes-skills-sterling
+# Sterling-Skills
 
 Skill condivisibili per operazioni su **IBM Sterling B2B Integrator** e integrazione EDI,
 scritte come [Hermes Agent skills](https://hermes-agent.nousresearch.com/docs) (markdown + YAML frontmatter, riutilizzabili con qualsiasi agente che supporti skill in questo formato).
